@@ -43,7 +43,10 @@ export class Employee extends EntityHelper {
   domains?: string[];
 
   @Column({ type: String, nullable: true })
-  aiToolProficiency?: number | null;
+  aiToolProficiency: number | null;
+
+  @Column({ type: String, nullable: true })
+  domainProficiency?: number | null;
 
   @Column({ type: String, nullable: true })
   careerDetails?: string | null;

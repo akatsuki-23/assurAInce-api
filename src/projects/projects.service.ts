@@ -2,7 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { EntityCondition } from 'src/utils/types/entity-condition.type';
 import { IPaginationOptions } from 'src/utils/types/pagination-options';
-import { DeepPartial, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { NullableType } from '../utils/types/nullable.type';
 import { Project } from './entities/project.entity';
@@ -12,14 +12,12 @@ import { EmployeesService } from 'src/employees/employee.service';
 import { AiTools } from 'src/ai-tools/entities/ai-tools.entity';
 import { Employee } from 'src/employees/entities/employee.entity';
 
-
 interface ProjectEstimation {
   numberOfTasks: number;
   averageTaskCompletionTime: number; // in hours
   teamSize: number;
   hourlyRate: number;
 }
-
 
 interface ProjectEstimationResult {
   cost: number;

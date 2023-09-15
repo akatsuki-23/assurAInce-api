@@ -35,6 +35,9 @@ export class CreateEmployeeDto {
   aiToolProficiency?: number | null;
 
   @IsOptional()
+  domainProficiency?: number | null;
+
+  @IsOptional()
   category?: string | null;
 
   @IsOptional()
