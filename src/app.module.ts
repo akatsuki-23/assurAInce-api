@@ -30,6 +30,7 @@ import { SessionModule } from './session/session.module';
 import { MailerModule } from './mailer/mailer.module';
 import { EmployeesModule } from './employees/employee.module';
 import { AiToolsModule } from './ai-tools/ai-tools.module';
+import { ProjectsModule } from './projects/projects.module';
 
 @Module({
   imports: [
@@ -91,6 +92,7 @@ import { AiToolsModule } from './ai-tools/ai-tools.module';
     MailerModule,
     HomeModule,
     AiToolsModule,
+    ProjectsModule
   ],
 })
-export class AppModule {}
+export class AppModule { }
