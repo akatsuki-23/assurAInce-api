@@ -6,10 +6,12 @@ import {
   ManyToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
 import { EntityHelper } from 'src/utils/entity-helper';
 import { Exclude } from 'class-transformer';
 import { Project } from 'src/projects/entities/project.entity';
+import { EmployeeAiToolProficiency } from 'src/ai-tools-proficiency/entities/ai-tools-proficiency.entity';
 
 @Entity()
 export class AiTools extends EntityHelper {
@@ -43,4 +45,7 @@ export class AiTools extends EntityHelper {
 
   @DeleteDateColumn()
   deletedAt: Date;
+
+  @OneToMany(() => EmployeeAiToolProficiency, (prof) => prof.aiTool)
+  employeeAiToolProficiency: EmployeeAiToolProficiency[];
 }

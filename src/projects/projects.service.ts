@@ -36,8 +36,30 @@ export class ProjectsService {
   private extractProjectFieldsFromDto(
     dto: CreateProjectDto | UpdateProjectDto,
   ) {
-    const { name, description, techStacks, status } = dto;
-    return { name, description, techStacks, status };
+    const {
+      name,
+      description,
+      techStacks,
+      status,
+      startDate,
+      endDate,
+      category,
+      amountSaved,
+      iconUrl,
+      projectCode,
+    } = dto;
+    return {
+      name,
+      description,
+      techStacks,
+      status,
+      startDate,
+      endDate,
+      category,
+      amountSaved,
+      iconUrl,
+      projectCode,
+    } as Project;
   }
 
   private async fetchAITools(
