@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty } from 'class-validator';
+import { IsNotEmpty, IsOptional } from 'class-validator';
 export class CreateAiToolDto {
   @ApiProperty({ example: 'Chat GPT' })
   @IsNotEmpty()
@@ -8,4 +8,8 @@ export class CreateAiToolDto {
   @ApiProperty({ example: 'Code development' })
   @IsNotEmpty()
   domain: string;
+
+  @ApiProperty({ example: 'https://picsum.photos/200' })
+  @IsOptional()
+  iconUrl: string;
 }

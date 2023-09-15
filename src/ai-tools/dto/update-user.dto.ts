@@ -13,6 +13,10 @@ export class UpdateAiToolDto extends PartialType(CreateAiToolDto) {
   @IsOptional()
   domain: string;
 
+  @ApiProperty({ example: 'https://picsum.photos/200' })
+  @IsOptional()
+  iconUrl: string;
+
   @ApiProperty({ example: 1000.5 })
   @IsOptional()
   savingsPerProject: number;

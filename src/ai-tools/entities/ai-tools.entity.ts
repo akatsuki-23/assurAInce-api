@@ -19,8 +19,10 @@ export class AiTools extends EntityHelper {
   @Column({ type: String, unique: true, nullable: false })
   name: string;
 
+  @Column({ type: String, nullable: true })
+  iconUrl: string | null;
+
   @Column({ nullable: true })
-  @Exclude({ toPlainOnly: true })
   domain: string;
 
   // @Exclude({ toPlainOnly: true })
@@ -30,7 +32,7 @@ export class AiTools extends EntityHelper {
   @Column({ type: 'float', nullable: true })
   public savingsPerProject: number | null;
 
-  @ManyToMany(() => Project, project => project.aiTools)
+  @ManyToMany(() => Project, (project) => project.aiTools)
   projects: Project[];
 
   @CreateDateColumn()
