@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { EntityCondition } from 'src/utils/types/entity-condition.type';
 import { IPaginationOptions } from 'src/utils/types/pagination-options';
-import { DeepPartial, Repository } from 'typeorm';
+import { DeepPartial, In, Repository } from 'typeorm';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { Employee } from './entities/employee.entity';
 import { NullableType } from '../utils/types/nullable.type';
@@ -12,7 +12,7 @@ export class EmployeesService {
   constructor(
     @InjectRepository(Employee)
     private employeesRepository: Repository<Employee>,
-  ) {}
+  ) { }
 
   create(createProfileDto: CreateEmployeeDto): Promise<Employee> {
     return this.employeesRepository.save(
@@ -49,5 +49,9 @@ export class EmployeesService {
 
   async softDelete(id: Employee['id']): Promise<void> {
     await this.employeesRepository.softDelete(id);
+  }
+
+  async findByIds(ids: number[]): Promise<Employee[]> {
+    return this.employeesRepository.findBy({ id: In(ids) });
   }
 }

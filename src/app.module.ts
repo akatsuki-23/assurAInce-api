@@ -92,7 +92,7 @@ import { ProjectsModule } from './projects/projects.module';
     MailerModule,
     HomeModule,
     AiToolsModule,
-    ProjectsModule
+    ProjectsModule,
   ],
 })
 export class AppModule { }

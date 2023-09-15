@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { EntityCondition } from 'src/utils/types/entity-condition.type';
 import { IPaginationOptions } from 'src/utils/types/pagination-options';
-import { DeepPartial, Repository } from 'typeorm';
+import { DeepPartial, In, Repository } from 'typeorm';
 import { CreateAiToolDto } from './dto/create-ai-tool.dto';
 import { AiTools } from './entities/ai-tools.entity';
 import { NullableType } from '../utils/types/nullable.type';
@@ -12,7 +12,7 @@ export class AiToolsService {
   constructor(
     @InjectRepository(AiTools)
     private aiToolsRepository: Repository<AiTools>,
-  ) {}
+  ) { }
 
   create(createAiToolDto: CreateAiToolDto): Promise<AiTools> {
     return this.aiToolsRepository.save(
@@ -46,5 +46,9 @@ export class AiToolsService {
 
   async softDelete(id: AiTools['id']): Promise<void> {
     await this.aiToolsRepository.softDelete(id);
+  }
+
+  async findByIds(ids: number[]): Promise<AiTools[]> {
+    return this.aiToolsRepository.findBy({ id: In(ids) });
   }
 }

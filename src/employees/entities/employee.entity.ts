@@ -4,12 +4,15 @@ import {
   DeleteDateColumn,
   Entity,
   Index,
+  JoinTable,
+  ManyToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { EntityHelper } from 'src/utils/entity-helper';
 import { ActiveStatus } from 'src/auth/auth-providers.enum';
 import { Expose } from 'class-transformer';
+import { Project } from 'src/projects/entities/project.entity';
 
 @Entity()
 export class Employee extends EntityHelper {
@@ -56,6 +59,10 @@ export class Employee extends EntityHelper {
   @Index()
   @Column({ type: String, nullable: true })
   lastName: string | null;
+
+  @ManyToMany(() => Project, project => project.employees)
+  @JoinTable()
+  projects: Project[];
 
   @CreateDateColumn()
   createdAt: Date;

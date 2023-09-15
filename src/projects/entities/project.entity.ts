@@ -4,6 +4,8 @@ import {
   DeleteDateColumn,
   Entity,
   Index,
+  JoinTable,
+  ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -11,6 +13,8 @@ import {
 import { Status } from '../../statuses/entities/status.entity';
 import { EntityHelper } from 'src/utils/entity-helper';
 import { Expose } from 'class-transformer';
+import { AiTools } from 'src/ai-tools/entities/ai-tools.entity';
+import { Employee } from 'src/employees/entities/employee.entity';
 
 @Entity()
 export class Project extends EntityHelper {
@@ -33,7 +37,14 @@ export class Project extends EntityHelper {
   status?: Status;
 
   @Column({ type: String, nullable: false })
-  tech_stacks: string
+  techStacks: string
+
+  @ManyToMany(() => AiTools, aiTool => aiTool.projects)
+  @JoinTable()
+  aiTools: AiTools[];
+
+  @ManyToMany(() => Employee, employee => employee.projects)
+  employees: Employee[];
 
   @CreateDateColumn()
   createdAt: Date;

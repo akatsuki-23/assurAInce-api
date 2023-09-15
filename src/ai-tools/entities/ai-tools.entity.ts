@@ -3,11 +3,13 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  ManyToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { EntityHelper } from 'src/utils/entity-helper';
 import { Exclude } from 'class-transformer';
+import { Project } from 'src/projects/entities/project.entity';
 
 @Entity()
 export class AiTools extends EntityHelper {
@@ -27,6 +29,9 @@ export class AiTools extends EntityHelper {
   @Exclude({ toPlainOnly: true })
   @Column({ type: 'float', nullable: true })
   public savingsPerProject: number | null;
+
+  @ManyToMany(() => Project, project => project.aiTools)
+  projects: Project[];
 
   @CreateDateColumn()
   createdAt: Date;

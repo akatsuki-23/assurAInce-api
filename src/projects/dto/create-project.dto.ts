@@ -22,11 +22,19 @@ export class CreateProjectDto {
   @IsString()
   @IsNotEmpty()
   @ApiProperty({ type: String })
-  tech_stacks: string;
+  techStacks: string;
 
-  @ApiProperty({ type: Status })
+  @ApiProperty({ type: Status, example: { id: 1, name: 'Active' } })
   @Validate(IsExist, ['Status', 'id'], {
     message: 'statusNotExists',
   })
   status?: Status;
+
+  @ApiProperty({ type: [Number], example: [1, 2, 3] })
+  @IsOptional()
+  aiTools?: Number[];
+
+  @ApiProperty({ type: [Number], example: [1, 2, 3] })
+  @IsOptional()
+  employees?: Number[];
 }
