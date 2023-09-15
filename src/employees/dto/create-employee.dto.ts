@@ -1,9 +1,16 @@
-import { Transform } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsNotEmpty, IsOptional, Validate } from 'class-validator';
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsOptional,
+  Validate,
+  ValidateNested,
+} from 'class-validator';
 import { IsNotExist } from 'src/utils/validators/is-not-exists.validator';
 
 import { lowerCaseTransformer } from 'src/utils/transformers/lower-case.transformer';
+import { CreateAiToolProficiencyDto } from './create-ai-tool-proficiency.dto';
 
 export class CreateEmployeeDto {
   @ApiProperty({ example: 'test1@example.com' })
@@ -52,4 +59,10 @@ export class CreateEmployeeDto {
   @ApiProperty({ example: 'Doe' })
   @IsNotEmpty()
   lastName: string | null;
+
+  @IsOptional()
+  @ApiProperty({ type: [CreateAiToolProficiencyDto] })
+  @ValidateNested({ each: true }) // Enable nested validation for each item in the array
+  @Type(() => CreateAiToolProficiencyDto)
+  aiTools: CreateAiToolProficiencyDto[];
 }
