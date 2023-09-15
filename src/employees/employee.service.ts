@@ -7,58 +7,35 @@ import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { Employee } from './entities/employee.entity';
 import { NullableType } from '../utils/types/nullable.type';
 import { EmployeeAiToolProficiency } from 'src/ai-tools-proficiency/entities/ai-tools-proficiency.entity';
-import { AiTools } from 'src/ai-tools/entities/ai-tools.entity';
-import { plainToClass } from 'class-transformer';
+import { plainToInstance } from 'class-transformer';
 
 @Injectable()
 export class EmployeesService {
   constructor(
     @InjectRepository(Employee)
     private employeesRepository: Repository<Employee>,
-    @InjectRepository(EmployeeAiToolProficiency)
-    private employeesAiToolProfRepository: Repository<EmployeeAiToolProficiency>,
-    @InjectRepository(AiTools)
-    private aiToolProfRepository: Repository<AiTools>,
   ) {}
 
   async create(createProfileDto: CreateEmployeeDto): Promise<Employee> {
-    const newEmployee = plainToClass(Employee, createProfileDto);
+    const newEmployee = plainToInstance(Employee, createProfileDto);
+    delete newEmployee['aiTools'];
 
-    const employee = await this.employeesRepository.create(newEmployee);
+    const newEmployeeAiToolProficiencyList: EmployeeAiToolProficiency[] = [];
+
+    createProfileDto.aiTools.forEach((data) => {
+      const newEmployeeAiToolProficiency = new EmployeeAiToolProficiency();
+
+      newEmployeeAiToolProficiency.aiToolId = data.id;
+      newEmployeeAiToolProficiency.proficiency = data.proficiency;
+
+      newEmployeeAiToolProficiencyList.push(newEmployeeAiToolProficiency);
+    });
+
+    newEmployee.employeeAiToolProficiency = newEmployeeAiToolProficiencyList;
+
+    const employee = await this.employeesRepository.save(newEmployee);
 
     return employee;
-
-    // const employeeAiToolProficiency = new EmployeeAiToolProficiency[];
-    // let list: Array<EmployeeAiToolProficiency>;
-    // const employeesWithAdditionalData = await Promise.all(
-    //   createProfileDto.aiTools.map(async (element) => {
-    //     const aiTool = await this.aiToolProfRepository.findOne({
-    //       where: { name: element.name },
-    //     });
-    //     if (aiTool) {
-    //       const e = new EmployeeAiToolProficiency();
-    //       e.aiTool = aiTool;
-    //       list.push(e);
-    //     }
-    //   }
-    //   return list
-    //   ),
-    // );
-    // await this.employeesAiToolProfRepository.save(employeesWithAdditionalData);
-    // this.employeesRepository
-    //   .save(this.employeesRepository.create(createProfileDto))
-    //   .then((employee) => {
-    //     const employeeAiToolProficiency = new EmployeeAiToolProficiency();
-    //     employeeAiToolProficiency.employee = employee;
-    //     employeeAiToolProficiency.aiTool = ;
-    //     // employeeAiToolProficiency.aiTool = aiTool;
-    //     // employeeAiToolProficiency.proficiency = proficiency;
-    //     // const aitool = this.employeesAiToolProfRepository.save();
-    //     return employee;
-    //   })
-    //   .catch((err) => {
-    //     console.log;
-    //   });
   }
 
   findManyWithPagination(

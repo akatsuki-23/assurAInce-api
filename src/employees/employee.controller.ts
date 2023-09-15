@@ -25,7 +25,7 @@ import { NullableType } from '../utils/types/nullable.type';
 
 @ApiTags('Employees')
 @Controller({
-  path: 'Employees',
+  path: 'employees',
   version: '1',
 })
 export class EmployeesController {

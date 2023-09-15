@@ -75,7 +75,9 @@ export class Employee extends EntityHelper {
   @DeleteDateColumn()
   deletedAt: Date;
 
-  @OneToMany(() => EmployeeAiToolProficiency, (prof) => prof.employee)
+  @OneToMany(() => EmployeeAiToolProficiency, (prof) => prof.employee, {
+    cascade: true,
+  })
   @JoinTable()
   employeeAiToolProficiency: EmployeeAiToolProficiency[];
 }

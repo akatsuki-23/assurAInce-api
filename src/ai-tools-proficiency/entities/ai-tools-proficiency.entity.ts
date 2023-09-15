@@ -11,6 +11,12 @@ export class EmployeeAiToolProficiency {
   @Column()
   proficiency: number;
 
+  @Column()
+  aiToolId: number;
+
+  @Column()
+  employeeId: number;
+
   @ManyToOne(() => AiTools, (aitools) => aitools.employeeAiToolProficiency)
   aiTool: AiTools;
 

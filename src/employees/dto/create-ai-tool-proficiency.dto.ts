@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty } from 'class-validator';
 
 export class CreateAiToolProficiencyDto {
-  @ApiProperty({ example: 'Chat GPT' })
+  @ApiProperty({ example: 1 })
   @IsNotEmpty()
   id: number;
 
