@@ -460,4 +460,15 @@ export class AuthService {
       tokenExpires,
     };
   }
+
+  public health() {
+    const tokenExpiresIn = this.configService.getOrThrow('auth.expires', {
+      infer: true,
+    });
+
+    const tokenExpires = Date.now() + ms(tokenExpiresIn);
+    return {
+      tokenExpires,
+    };
+  }
 }

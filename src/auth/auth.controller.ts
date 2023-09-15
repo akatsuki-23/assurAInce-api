@@ -93,6 +93,7 @@ export class AuthController {
   @UseGuards(AuthGuard('jwt'))
   @HttpCode(HttpStatus.OK)
   public me(@Request() request): Promise<NullableType<User>> {
+    console.log('Test');
     return this.service.me(request.user);
   }
 
@@ -139,5 +140,11 @@ export class AuthController {
   @HttpCode(HttpStatus.NO_CONTENT)
   public async delete(@Request() request): Promise<void> {
     return this.service.softDelete(request.user);
+  }
+
+  @Get('health')
+  @HttpCode(HttpStatus.OK)
+  public health(): void {
+    this.service.health();
   }
 }
