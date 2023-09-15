@@ -23,9 +23,9 @@ import { Employee } from './entities/employee.entity';
 import { InfinityPaginationResultType } from '../utils/types/infinity-pagination-result.type';
 import { NullableType } from '../utils/types/nullable.type';
 
-@ApiTags('employees')
+@ApiTags('Employees')
 @Controller({
-  path: 'employees',
+  path: 'Employees',
   version: '1',
 })
 export class EmployeesController {

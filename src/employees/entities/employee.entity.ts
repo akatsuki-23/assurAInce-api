@@ -5,6 +5,7 @@ import {
   Entity,
   Index,
   JoinTable,
+  OneToMany,
   ManyToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -13,6 +14,7 @@ import { EntityHelper } from 'src/utils/entity-helper';
 import { ActiveStatus } from 'src/auth/auth-providers.enum';
 import { Expose } from 'class-transformer';
 import { Project } from 'src/projects/entities/project.entity';
+import { EmployeeAiToolProficiency } from 'src/ai-tools-proficiency/entities/ai-tools-proficiency.entity';
 
 @Entity()
 export class Employee extends EntityHelper {
@@ -60,7 +62,7 @@ export class Employee extends EntityHelper {
   @Column({ type: String, nullable: true })
   lastName: string | null;
 
-  @ManyToMany(() => Project, project => project.employees)
+  @ManyToMany(() => Project, (project) => project.employees)
   @JoinTable()
   projects: Project[];
 
@@ -72,4 +74,8 @@ export class Employee extends EntityHelper {
 
   @DeleteDateColumn()
   deletedAt: Date;
+
+  @OneToMany(() => EmployeeAiToolProficiency, (prof) => prof.employee)
+  @JoinTable()
+  employeeAiToolProficiency: EmployeeAiToolProficiency[];
 }

@@ -4,6 +4,7 @@ import { IsEmail, IsNotEmpty, IsOptional, Validate } from 'class-validator';
 import { IsNotExist } from 'src/utils/validators/is-not-exists.validator';
 
 import { lowerCaseTransformer } from 'src/utils/transformers/lower-case.transformer';
+import { CreateAiToolProficiencyDto } from './create-ai-tool-proficiency.dto';
 
 export class CreateEmployeeDto {
   @ApiProperty({ example: 'test1@example.com' })
@@ -52,4 +53,7 @@ export class CreateEmployeeDto {
   @ApiProperty({ example: 'Doe' })
   @IsNotEmpty()
   lastName: string | null;
+
+  @IsOptional()
+  aiTools: CreateAiToolProficiencyDto[];
 }

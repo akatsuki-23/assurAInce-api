@@ -14,7 +14,7 @@ import {
 } from '@nestjs/common';
 import { AiToolsService } from './ai-tools.service';
 import { CreateAiToolDto } from './dto/create-ai-tool.dto';
-import { UpdateAiToolDto } from './dto/update-user.dto';
+import { UpdateAiToolDto } from './dto/update-ai-tools.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { infinityPagination } from 'src/utils/infinity-pagination';
 import { AiTools } from './entities/ai-tools.entity';

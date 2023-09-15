@@ -7,6 +7,7 @@ import { IsEmail, IsOptional, MinLength, Validate } from 'class-validator';
 import { IsNotExist } from 'src/utils/validators/is-not-exists.validator';
 
 import { lowerCaseTransformer } from 'src/utils/transformers/lower-case.transformer';
+import { AiTools } from 'src/ai-tools/entities/ai-tools.entity';
 
 export class UpdateEmployeeDto extends PartialType(CreateEmployeeDto) {
   @ApiProperty({ example: 'test1@example.com' })
@@ -59,4 +60,7 @@ export class UpdateEmployeeDto extends PartialType(CreateEmployeeDto) {
   @ApiProperty({ example: 'Doe' })
   @IsOptional()
   lastName?: string | null;
+
+  @IsOptional()
+  aiTools: AiTools[];
 }
