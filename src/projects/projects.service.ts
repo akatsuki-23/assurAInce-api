@@ -7,6 +7,20 @@ import { CreateProjectDto } from './dto/create-project.dto';
 import { NullableType } from '../utils/types/nullable.type';
 import { Project } from './entities/project.entity';
 
+
+interface ProjectEstimation {
+  numberOfTasks: number;
+  averageTaskCompletionTime: number; // in hours
+  teamSize: number;
+  hourlyRate: number;
+}
+
+
+interface ProjectEstimationResult {
+  cost: number;
+  duration: number; // in days
+}
+
 @Injectable()
 export class ProjectsService {
   constructor(
@@ -47,4 +61,43 @@ export class ProjectsService {
   async softDelete(id: Project['id']): Promise<void> {
     await this.projectsRepository.softDelete(id);
   }
+
+
+  estimateProject(estimation: ProjectEstimation, aiAssistance: boolean = false): ProjectEstimationResult {
+    if (aiAssistance) {
+      const aiAdjustedDuration = this.callAiTool(estimation);
+      return aiAdjustedDuration
+    }
+
+    const { numberOfTasks, averageTaskCompletionTime, teamSize, hourlyRate } = estimation;
+    const totalWorkHours = numberOfTasks * averageTaskCompletionTime;
+    const totalLaborCost = totalWorkHours * teamSize * hourlyRate;
+
+    // Assume 20% additional for other expenses (overheads, materials, etc.)
+    const additionalCost = 0.2 * totalLaborCost;
+    const totalCost = totalLaborCost + additionalCost;
+
+    // Calculate the project duration
+    const totalWorkDays = totalWorkHours / (teamSize * 8); // Assuming 8 hours workday
+
+
+    return {
+      cost: totalCost,
+      duration: totalWorkDays,
+    };
+  }
+
+  callAiTool(estimation: ProjectEstimation): ProjectEstimationResult {
+    // Simulated AI tool output
+    const aiCostAdjustmentFactor = 0.9; // For example, AI suggests the project might cost 10% less
+    const aiDurationAdjustmentFactor = 0.8; // For example, AI suggests the project might be completed 20% faster
+
+    const estimatedResult = this.estimateProject(estimation);
+
+    return {
+      cost: estimatedResult.cost * aiCostAdjustmentFactor,
+      duration: estimatedResult.duration * aiDurationAdjustmentFactor,
+    };
+  }
+
 }
