@@ -32,6 +32,14 @@ import { NullableType } from '../utils/types/nullable.type';
 export class AiToolsController {
   constructor(private readonly aiToolsService: AiToolsService) {}
 
+  @Get('suggestions')
+  @HttpCode(HttpStatus.OK)
+  getSuggestions(
+    @Query('category') category: string,
+  ): Promise<NullableType<AiTools[]>> {
+    return this.aiToolsService.getSuggestions(category);
+  }
+
   @Post()
   @HttpCode(HttpStatus.CREATED)
   create(@Body() createAiToolDto: CreateAiToolDto): Promise<AiTools> {
