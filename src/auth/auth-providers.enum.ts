@@ -5,3 +5,8 @@ export enum AuthProvidersEnum {
   twitter = 'twitter',
   apple = 'apple',
 }
+
+export enum ActiveStatus {
+  active = 'active',
+  deActive = 'deActive',
+}

@@ -28,6 +28,7 @@ import { DataSource, DataSourceOptions } from 'typeorm';
 import { AllConfigType } from './config/config.type';
 import { SessionModule } from './session/session.module';
 import { MailerModule } from './mailer/mailer.module';
+import { EmployeesModule } from './employees/employee.module';
 import { AiToolsModule } from './ai-tools/ai-tools.module';
 
 @Module({
@@ -77,6 +78,7 @@ import { AiToolsModule } from './ai-tools/ai-tools.module';
       inject: [ConfigService],
     }),
     UsersModule,
+    EmployeesModule,
     FilesModule,
     AuthModule,
     AuthFacebookModule,
