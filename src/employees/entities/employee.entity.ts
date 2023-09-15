@@ -66,6 +66,27 @@ export class Employee extends EntityHelper {
   @JoinTable()
   projects: Project[];
 
+  @Column({ type: Number, nullable: true })
+  empEnvironmentSatisfaction: number | null;
+
+  @Column({ type: Number, nullable: true })
+  EmpLastSalaryHikePercent: number | null;
+
+  @Column({ type: Number, nullable: true })
+  EmpWorkLifeBalance: number | null;
+
+  @Column({ type: Number, nullable: true })
+  ExperienceYearsAtThisCompany: number | null;
+
+  @Column({ type: Number, nullable: true })
+  ExperienceYearsInCurrentRole: number | null;
+
+  @Column({ type: Number, nullable: true })
+  YearsSinceLastPromotion: number | null;
+
+  @Column({ type: Number, nullable: true })
+  YearsWithCurrManager: number | null;
+
   @CreateDateColumn()
   createdAt: Date;
 
