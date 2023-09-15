@@ -37,13 +37,13 @@ export class Project extends EntityHelper {
   status?: Status;
 
   @Column({ type: String, nullable: false })
-  techStacks: string
+  techStacks: string;
 
-  @ManyToMany(() => AiTools, aiTool => aiTool.projects)
+  @ManyToMany(() => AiTools, (aiTool) => aiTool.projects)
   @JoinTable()
   aiTools: AiTools[];
 
-  @ManyToMany(() => Employee, employee => employee.projects)
+  @ManyToMany(() => Employee, (employee) => employee.projects)
   employees: Employee[];
 
   @CreateDateColumn()
@@ -54,4 +54,22 @@ export class Project extends EntityHelper {
 
   @DeleteDateColumn()
   deletedAt: Date;
+
+  @Column({ nullable: true })
+  startDate?: Date;
+
+  @Column({ nullable: true })
+  endDate?: Date;
+
+  @Column({ type: String, nullable: true })
+  category?: string | null;
+
+  @Column({ type: String, nullable: true })
+  iconUrl: string | null;
+
+  @Column({ type: String, nullable: true })
+  projectCode?: string | null;
+
+  @Column({ type: 'decimal', precision: 10, scale: 2, nullable: true })
+  amountSaved?: number;
 }
