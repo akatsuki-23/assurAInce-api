@@ -41,7 +41,10 @@ export class Employee extends EntityHelper {
   domains?: string[];
 
   @Column({ type: String, nullable: true })
-  aiToolProficiency?: number | null;
+  aiToolProficiency: number | null;
+
+  @Column({ type: String, nullable: true })
+  domainProficiency?: number | null;
 
   @Column({ type: String, nullable: true })
   careerDetails?: string | null;
@@ -60,7 +63,7 @@ export class Employee extends EntityHelper {
   @Column({ type: String, nullable: true })
   lastName: string | null;
 
-  @ManyToMany(() => Project, project => project.employees)
+  @ManyToMany(() => Project, (project) => project.employees)
   @JoinTable()
   projects: Project[];
 

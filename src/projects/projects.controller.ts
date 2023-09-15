@@ -6,7 +6,6 @@ import {
   Patch,
   Param,
   Delete,
-  UseGuards,
   Query,
   DefaultValuePipe,
   ParseIntPipe,
@@ -18,11 +17,8 @@ import {
 import { ProjectsService } from './projects.service';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { Roles } from 'src/roles/roles.decorator';
-import { RoleEnum } from 'src/roles/roles.enum';
-import { AuthGuard } from '@nestjs/passport';
-import { RolesGuard } from 'src/roles/roles.guard';
+import { ApiTags } from '@nestjs/swagger';
+
 import { infinityPagination } from 'src/utils/infinity-pagination';
 import { Project } from './entities/project.entity';
 import { InfinityPaginationResultType } from '../utils/types/infinity-pagination-result.type';
@@ -37,7 +33,7 @@ import { NullableType } from '../utils/types/nullable.type';
   version: '1',
 })
 export class ProjectsController {
-  constructor(private readonly projectsService: ProjectsService) { }
+  constructor(private readonly projectsService: ProjectsService) {}
 
   @SerializeOptions({
     groups: ['admin'],

@@ -1,10 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-  Validate,
-} from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString, Validate } from 'class-validator';
 import { Status } from 'src/statuses/entities/status.entity';
 import { IsExist } from 'src/utils/validators/is-exists.validator';
 

@@ -15,6 +15,10 @@ import {
 } from '@nestjs/common';
 import { EmployeesService } from './employee.service';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
+import {
+  EstimateEfficiency as EstimateEfficiencyDto,
+  TeamWorkEfficiencyList,
+} from './dto/estimate-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
 import { ApiTags } from '@nestjs/swagger';
 
@@ -87,5 +91,13 @@ export class EmployeesController {
   @HttpCode(HttpStatus.NO_CONTENT)
   remove(@Param('id') id: number): Promise<void> {
     return this.employeesService.softDelete(id);
+  }
+
+  @Post('estimate')
+  @HttpCode(HttpStatus.OK)
+  estimate(
+    @Body() body: EstimateEfficiencyDto,
+  ): Promise<TeamWorkEfficiencyList> {
+    return this.employeesService.estimateEfficiency(body);
   }
 }
