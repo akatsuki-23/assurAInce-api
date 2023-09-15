@@ -1,5 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
+  IsDate,
+  IsISO8601,
   IsNotEmpty,
   IsOptional,
   IsString,
@@ -32,9 +34,36 @@ export class CreateProjectDto {
 
   @ApiProperty({ type: [Number], example: [1, 2, 3] })
   @IsOptional()
-  aiTools?: Number[];
+  aiTools?: number[];
 
   @ApiProperty({ type: [Number], example: [1, 2, 3] })
   @IsOptional()
-  employees?: Number[];
+  employees?: number[];
+
+  @ApiProperty({ type: String, format: 'date-time', nullable: true }) // Specify 'date-time' format
+  @IsOptional()
+  @IsISO8601() // Add IsISO8601 validator for ISO datetime timestamp
+  startDate?: string;
+
+  @ApiProperty({ type: Date, nullable: true })
+  @IsOptional()
+  @IsISO8601() // Add IsISO8601 validator for ISO datetime timestamp
+  endDate?: string;
+
+  @ApiProperty({ type: String, nullable: true })
+  @IsOptional()
+  @IsString()
+  category?: string | null;
+
+  @ApiProperty({ example: 'https://picsum.photos/200' })
+  @IsOptional()
+  iconUrl?: string;
+
+  @ApiProperty({ example: 'PRJ-1234' })
+  @IsOptional()
+  projectCode?: string;
+
+  @ApiProperty({ type: Number, nullable: true })
+  @IsOptional()
+  amountSaved?: number | null;
 }

@@ -3,6 +3,7 @@ import { CreateAiToolDto } from './create-ai-tool.dto';
 
 import { ApiProperty } from '@nestjs/swagger';
 import { IsOptional } from 'class-validator';
+import { Employee } from 'src/employees/entities/employee.entity';
 
 export class UpdateAiToolDto extends PartialType(CreateAiToolDto) {
   @ApiProperty({ example: 'Chat GPT' })
@@ -13,7 +14,14 @@ export class UpdateAiToolDto extends PartialType(CreateAiToolDto) {
   @IsOptional()
   domain: string;
 
+  @ApiProperty({ example: 'https://picsum.photos/200' })
+  @IsOptional()
+  iconUrl: string;
+
   @ApiProperty({ example: 1000.5 })
   @IsOptional()
   savingsPerProject: number;
+
+  @IsOptional()
+  employees: Employee[];
 }

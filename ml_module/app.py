@@ -9,8 +9,6 @@ AIRFClassifier = joblib.load(AIRF)
 
 
 def RFprediction(
-    EmpDepartment: int,
-    EmpJobRole: int,
     EmpEnvironmentSatisfaction: int,
     EmpLastSalaryHikePercent: int,
     EmpWorkLifeBalance: int,
@@ -22,8 +20,6 @@ def RFprediction(
     RFprediction = RFClassifier.predict(
         [
             [
-                EmpDepartment,
-                # EmpJobRole,
                 EmpEnvironmentSatisfaction,
                 EmpLastSalaryHikePercent,
                 EmpWorkLifeBalance,
@@ -38,8 +34,6 @@ def RFprediction(
 
 
 def AIRFprediction(
-    EmpDepartment: int,
-    EmpJobRole: int,
     EmpEnvironmentSatisfaction: int,
     EmpLastSalaryHikePercent: int,
     EmpWorkLifeBalance: int,
@@ -52,8 +46,6 @@ def AIRFprediction(
     AIRFprediction = AIRFClassifier.predict(
         [
             [
-                EmpDepartment,
-                # EmpJobRole,
                 EmpEnvironmentSatisfaction,
                 EmpLastSalaryHikePercent,
                 EmpWorkLifeBalance,
@@ -69,20 +61,17 @@ def AIRFprediction(
 
 
 def main():
-    empDepartment = int(sys.argv[1])
-    empJobRole = int(sys.argv[2])
-    empEnvironmentSatisfaction = int(sys.argv[3])
-    empLastSalaryHikePercent = int(sys.argv[4])
-    empWorkLifeBalance = int(sys.argv[5])
-    experienceYearsAtThisCompany = int(sys.argv[6])
-    experienceYearsInCurrentRole = int(sys.argv[7])
-    yearsSinceLastPromotion = int(sys.argv[8])
-    yearsWithCurrManager = int(sys.argv[9])
-    aIProficiency = int(sys.argv[10])
+    empJobRole = int(sys.argv[1])
+    empEnvironmentSatisfaction = int(sys.argv[2])
+    empLastSalaryHikePercent = int(sys.argv[3])
+    empWorkLifeBalance = int(sys.argv[4])
+    experienceYearsAtThisCompany = int(sys.argv[5])
+    experienceYearsInCurrentRole = int(sys.argv[6])
+    yearsSinceLastPromotion = int(sys.argv[7])
+    yearsWithCurrManager = int(sys.argv[8])
+    aIProficiency = int(sys.argv[9])
 
     AIPrediction = AIRFprediction(
-        EmpDepartment=empDepartment,
-        EmpJobRole=empJobRole,
         EmpEnvironmentSatisfaction=empEnvironmentSatisfaction,
         EmpLastSalaryHikePercent=empLastSalaryHikePercent,
         EmpWorkLifeBalance=empWorkLifeBalance,
@@ -94,8 +83,6 @@ def main():
     )
 
     normalPrediction = RFprediction(
-        EmpDepartment=empDepartment,
-        EmpJobRole=empJobRole,
         EmpEnvironmentSatisfaction=empEnvironmentSatisfaction,
         EmpLastSalaryHikePercent=empLastSalaryHikePercent,
         EmpWorkLifeBalance=empWorkLifeBalance,

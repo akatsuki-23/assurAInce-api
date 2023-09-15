@@ -14,7 +14,7 @@ import {
 } from '@nestjs/common';
 import { AiToolsService } from './ai-tools.service';
 import { CreateAiToolDto } from './dto/create-ai-tool.dto';
-import { UpdateAiToolDto } from './dto/update-user.dto';
+import { UpdateAiToolDto } from './dto/update-ai-tools.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { infinityPagination } from 'src/utils/infinity-pagination';
 import { AiTools } from './entities/ai-tools.entity';
@@ -31,6 +31,14 @@ import { NullableType } from '../utils/types/nullable.type';
 })
 export class AiToolsController {
   constructor(private readonly aiToolsService: AiToolsService) {}
+
+  @Get('suggestions')
+  @HttpCode(HttpStatus.OK)
+  getSuggestions(
+    @Query('category') category: string,
+  ): Promise<NullableType<AiTools[]>> {
+    return this.aiToolsService.getSuggestions(category);
+  }
 
   @Post()
   @HttpCode(HttpStatus.CREATED)

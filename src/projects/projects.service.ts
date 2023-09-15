@@ -33,29 +33,63 @@ export class ProjectsService {
     private projectsRepository: Repository<Project>,
     private readonly aiToolsService: AiToolsService,
     private readonly employeesService: EmployeesService,
-  ) { }
+  ) {}
 
-  private extractProjectFieldsFromDto(dto: CreateProjectDto | UpdateProjectDto) {
-    const { name, description, techStacks, status } = dto;
-    return { name, description, techStacks, status };
+  private extractProjectFieldsFromDto(
+    dto: CreateProjectDto | UpdateProjectDto,
+  ) {
+    const {
+      name,
+      description,
+      techStacks,
+      status,
+      startDate,
+      endDate,
+      category,
+      amountSaved,
+      iconUrl,
+      projectCode,
+    } = dto;
+    return {
+      name,
+      description,
+      techStacks,
+      status,
+      startDate,
+      endDate,
+      category,
+      amountSaved,
+      iconUrl,
+      projectCode,
+    } as Project;
   }
 
-  private async fetchAITools(aiTools: number[] | undefined): Promise<AiTools[]> {
+  private async fetchAITools(
+    aiTools: number[] | undefined,
+  ): Promise<AiTools[]> {
     if (aiTools) {
       const existingAITools = await this.aiToolsService.findByIds(aiTools);
       if (existingAITools.length !== aiTools.length) {
-        throw new BadRequestException('One or more AI tool IDs do not exist in the database');
+        throw new BadRequestException(
+          'One or more AI tool IDs do not exist in the database',
+        );
       }
       return existingAITools;
     }
     return [];
   }
 
-  private async fetchEmployees(employees: number[] | undefined): Promise<Employee[]> {
+  private async fetchEmployees(
+    employees: number[] | undefined,
+  ): Promise<Employee[]> {
     if (employees) {
-      const existingEmployees = await this.employeesService.findByIds(employees);
+      const existingEmployees = await this.employeesService.findByIds(
+        employees,
+      );
       if (existingEmployees.length !== employees.length) {
-        throw new BadRequestException('One or more employee IDs do not exist in the database');
+        throw new BadRequestException(
+          'One or more employee IDs do not exist in the database',
+        );
       }
       return existingEmployees;
     }
@@ -64,15 +98,14 @@ export class ProjectsService {
 
   async create(createProjectDto: CreateProjectDto): Promise<Project> {
     const { aiTools, employees } = createProjectDto;
-    const aiToolIds = aiTools?.map(id => Number(id));
-    const employeeIds = employees?.map(employee => Number(employee));
+    const aiToolIds = aiTools?.map((id) => Number(id));
+    const employeeIds = employees?.map((employee) => Number(employee));
 
     // Validate AITools
     if (!aiToolIds || !Array.isArray(aiToolIds)) {
       throw new BadRequestException('aiTools must be an array of IDs');
     }
     const projectAiTools = await this.fetchAITools(aiToolIds);
-
 
     // Validate Employees
     if (!employeeIds || !Array.isArray(employeeIds)) {
@@ -85,9 +118,9 @@ export class ProjectsService {
 
     // Validate AITools presence
     project.aiTools = projectAiTools;
-    project.employees = projectEmployees
+    project.employees = projectEmployees;
 
-    return this.projectsRepository.save(project)
+    return this.projectsRepository.save(project);
   }
 
   findManyWithPagination(
@@ -96,14 +129,14 @@ export class ProjectsService {
     return this.projectsRepository.find({
       skip: (paginationOptions.page - 1) * paginationOptions.limit,
       take: paginationOptions.limit,
-      relations: ["aiTools", "employees"]
+      relations: ['aiTools', 'employees'],
     });
   }
 
   findOne(fields: EntityCondition<Project>): Promise<NullableType<Project>> {
     return this.projectsRepository.findOne({
       where: fields,
-      relations: ["aiTools", "employees"]
+      relations: ['aiTools', 'employees'],
     });
   }
 
@@ -113,14 +146,18 @@ export class ProjectsService {
       throw new BadRequestException('Project does not exist in the database.');
     }
     const projectDTO = this.extractProjectFieldsFromDto(payload);
-    project.name = projectDTO.name ? projectDTO.name : project.name
-    project.description = projectDTO.description ? projectDTO.description : project.description
-    project.techStacks = projectDTO.techStacks ? projectDTO.techStacks : project.techStacks
-    project.status = projectDTO.status ? projectDTO.status : project.status
+    project.name = projectDTO.name ? projectDTO.name : project.name;
+    project.description = projectDTO.description
+      ? projectDTO.description
+      : project.description;
+    project.techStacks = projectDTO.techStacks
+      ? projectDTO.techStacks
+      : project.techStacks;
+    project.status = projectDTO.status ? projectDTO.status : project.status;
 
     const { aiTools, employees } = payload;
-    const aiToolIds = aiTools?.map(id => Number(id));
-    const employeeIds = employees?.map(employee => Number(employee));
+    const aiToolIds = aiTools?.map((id) => Number(id));
+    const employeeIds = employees?.map((employee) => Number(employee));
 
     // Validate AITools
     if (aiToolIds && !Array.isArray(aiToolIds)) {
@@ -134,8 +171,8 @@ export class ProjectsService {
     }
     const projectEmployees = await this.fetchEmployees(employeeIds);
 
-    project.employees = projectEmployees
-    project.aiTools = projectAiTools
+    project.employees = projectEmployees;
+    project.aiTools = projectAiTools;
     return this.projectsRepository.save(project);
   }
 
@@ -143,14 +180,17 @@ export class ProjectsService {
     await this.projectsRepository.softDelete(id);
   }
 
-
-  estimateProject(estimation: ProjectEstimation, aiAssistance: boolean = false): ProjectEstimationResult {
+  estimateProject(
+    estimation: ProjectEstimation,
+    aiAssistance: boolean = false,
+  ): ProjectEstimationResult {
     if (aiAssistance) {
       const aiAdjustedDuration = this.callAiTool(estimation);
-      return aiAdjustedDuration
+      return aiAdjustedDuration;
     }
 
-    const { numberOfTasks, averageTaskCompletionTime, teamSize, hourlyRate } = estimation;
+    const { numberOfTasks, averageTaskCompletionTime, teamSize, hourlyRate } =
+      estimation;
     const totalWorkHours = numberOfTasks * averageTaskCompletionTime;
     const totalLaborCost = totalWorkHours * teamSize * hourlyRate;
 
@@ -160,7 +200,6 @@ export class ProjectsService {
 
     // Calculate the project duration
     const totalWorkDays = totalWorkHours / (teamSize * 8); // Assuming 8 hours workday
-
 
     return {
       cost: totalCost,
@@ -180,5 +219,4 @@ export class ProjectsService {
       duration: estimatedResult.duration * aiDurationAdjustmentFactor,
     };
   }
-
 }
