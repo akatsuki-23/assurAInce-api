@@ -31,6 +31,7 @@ import { MailerModule } from './mailer/mailer.module';
 import { EmployeesModule } from './employees/employee.module';
 import { AiToolsModule } from './ai-tools/ai-tools.module';
 import { ProjectsModule } from './projects/projects.module';
+import { SocialServicesModule } from './social-services/social-services.module';
 
 @Module({
   imports: [
@@ -92,7 +93,8 @@ import { ProjectsModule } from './projects/projects.module';
     MailerModule,
     HomeModule,
     AiToolsModule,
+    SocialServicesModule,
     ProjectsModule,
   ],
 })
-export class AppModule { }
+export class AppModule {}
