@@ -29,6 +29,7 @@ import { AllConfigType } from './config/config.type';
 import { SessionModule } from './session/session.module';
 import { MailerModule } from './mailer/mailer.module';
 import { EmployeesModule } from './employees/employee.module';
+import { AiToolsModule } from './ai-tools/ai-tools.module';
 
 @Module({
   imports: [
@@ -89,6 +90,7 @@ import { EmployeesModule } from './employees/employee.module';
     MailModule,
     MailerModule,
     HomeModule,
+    AiToolsModule,
   ],
 })
 export class AppModule {}
