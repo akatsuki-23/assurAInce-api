@@ -51,4 +51,14 @@ export class AiToolsService {
   async findByIds(ids: number[]): Promise<AiTools[]> {
     return this.aiToolsRepository.findBy({ id: In(ids) });
   }
+
+  async getSuggestions(category: string): Promise<AiTools[]> {
+    // Perform a case-insensitive search for AiTools with a domain that matches the category
+    return this.aiToolsRepository
+      .createQueryBuilder('aiTools')
+      .where('LOWER(aiTools.domain) LIKE LOWER(:category)', {
+        category: `%${category}%`, // Assuming you want to match partially
+      })
+      .getMany();
+  }
 }
