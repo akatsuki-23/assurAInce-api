@@ -62,4 +62,7 @@ export class UpdateEmployeeDto extends PartialType(CreateEmployeeDto) {
   @ApiProperty({ example: 'Doe' })
   @IsOptional()
   lastName?: string | null;
+
+  @IsOptional()
+  PayPerHour: number | null;
 }

@@ -19,6 +19,10 @@ export class TeamWorkEfficiency {
 
   @IsNotEmpty()
   timeForWorkInHrWithOutAI: number;
+  @IsNotEmpty()
+  estimatedCostWithAI: number;
+  @IsNotEmpty()
+  estimatedCostWithOutAI: number;
 }
 
 export class TeamWorkEfficiencyList {

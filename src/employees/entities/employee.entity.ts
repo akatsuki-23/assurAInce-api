@@ -90,6 +90,9 @@ export class Employee extends EntityHelper {
   @Column({ type: Number, nullable: true })
   YearsWithCurrManager: number | null;
 
+  @Column({ type: Number, nullable: true })
+  PayPerHour: number | null;
+
   @CreateDateColumn()
   createdAt: Date;
 

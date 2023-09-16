@@ -63,6 +63,9 @@ export class CreateEmployeeDto {
   @IsNotEmpty()
   lastName: string | null;
 
+  @IsNotEmpty()
+  PayPerHour: number | null;
+
   @IsOptional()
   @ApiProperty({ type: [CreateAiToolProficiencyDto] })
   @ValidateNested({ each: true }) // Enable nested validation for each item in the array

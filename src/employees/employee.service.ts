@@ -156,7 +156,16 @@ export class EmployeesService {
             twf.timeForWorkInHrWithAI = body.expectedTimeForWorkInHr / eff / i;
             twf.timeForWorkInHrWithOutAI = body.expectedTimeForWorkInHr / i;
             twf.employees = e[i];
+            const avgPayPerHour =
+              twf.employees.reduce(
+                (sum: number, emp) =>
+                  sum + Number(emp.PayPerHour == null ? 0 : emp.PayPerHour),
+                0,
+              ) / i;
             twf.employeeCount = i;
+            twf.estimatedCostWithAI = avgPayPerHour * twf.timeForWorkInHrWithAI;
+            twf.estimatedCostWithOutAI =
+              avgPayPerHour * twf.timeForWorkInHrWithOutAI;
             twfl.teamEfficiencies.push(twf);
           }
         }
